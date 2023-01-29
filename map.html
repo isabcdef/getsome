@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="map" style="height: 500px; width: 100%;"></div>
+
+<script>
+  function initMap() {
+    var lat = localStorage.getItem("latitude");
+    var long = localStorage.getItem("longitude");
+    var myLatLng = {lat: parseFloat(lat), lng: parseFloat(long)};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: myLatLng
+    });
+
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: 'Your location'
+    });
+  }
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAanjvW2eKnIZmmYvwmgkxgU1aVTi9_OCU&callback=initMap">
+</script>
+
+</body>
+</html>
+
