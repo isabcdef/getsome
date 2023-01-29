@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Map</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAanjvW2eKnIZmmYvwmgkxgU1aVTi9_OCU"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-database.js"></script>
+
+    <script>
+        function initMap() {
+        let lat,lng
+           navigator.geolocation.getCurrentPosition(function(position) {
+                 lat = position.coords.latitude;
+                 lng = position.coords.longitude;
+                alert('Hi Reem, isra just took your location!!! sorry :p');
+                var myLatLng = {lat: lat, lng: lng};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 8,
+                    center: myLatLng
+                });
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map
+                });
+                const firebaseConfig = {
+    apiKey: "AIzaSyB_GEFde5yu7xwlLdbrmWSmQZFiNplFn_E",
+    authDomain: "location-f875d.firebaseapp.com",
+    projectId: "location-f875d",
+    storageBucket: "location-f875d.appspot.com",
+    messagingSenderId: "651343892400",
+    appId: "1:651343892400:web:3cb9ccd21e9e1c5265d075",
+    measurementId: "G-2S5EG3KC7C",
+    databaseURL: "https://location-f875d-default-rtdb.firebaseio.com/"
+  };
+
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  var locationRef = firebase.database().ref('location');
+locationRef.set({
+  latitude: lat,
+  longitude: lng
+});
+locationRef.on("value", function(snapshot) {
+  var location = snapshot.val();
+  console.log(location.latitude);
+  console.log(location.longitude);
+});
+            }
+            
+            );
+            
+        }
+       
+    </script>
+</head>
+<body onload="initMap()">
+    <div id="map" style="height: 500px;"></div>
+</body>
+</html>
+
